@@ -1,7 +1,7 @@
 {
-  "name": "bitx",
-  "version": "1.10.0",
-  "author": "Brett Ausmeier <brett@ausmeier.co.za>",
+  "name": "bitx-api-node",
+  "version": "2.0.0",
+  "author": "dutu@protonmail.com",
   "description": "A simple wrapper for the Luno API.",
   "license": "MIT",
   "keywords": [
@@ -12,21 +12,19 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/bausmeier/node-bitx.git"
+    "url": "https://github.com/dutu/node-bitx.git"
   },
   "main": "./lib/BitX",
   "engines": {
     "node": ">=10.2.0"
   },
   "scripts": {
-    "lint": "standard",
     "test": "tap --timeout=200 --cov test/{IntegrationTests,UnitTests,Regression}.js",
     "codecov": "tap --coverage-report=lcov && codecov"
   },
   "devDependencies": {
     "codecov": "^3.8.3",
     "sinon": "^14.0.0",
-    "standard": "^10.0.3",
     "tap": "^16.3.0"
   }
 }

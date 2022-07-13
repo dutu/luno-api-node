@@ -1,22 +1,28 @@
-# node-bitx
-[![Build Status](https://travis-ci.org/bausmeier/node-bitx.png)](https://travis-ci.org/bausmeier/node-bitx)
-[![codecov](https://codecov.io/gh/bausmeier/node-bitx/branch/master/graph/badge.svg)](https://codecov.io/gh/bausmeier/node-bitx)
+# bitx-api-node
 
 A simple wrapper for the Luno API. The module supports promise and callbacks.
+
+> This module is forked from https://github.com/bausmeier/node-bitx. 
+> Since the original repository seems not to be maintained anymore, starting with version v1.10.1 this fork has been detached from original repository, and it is now stand alone. Contributions starting with v1.10.1 are not pull-requested to original repository.
 
 ## Usage
 Add bitx as a dependency:
 
 ```bash
-$ npm install --save bitx
+$ npm install --save bitx-api-node
 ```
+or
+```bash
+$ npm install --save "git+https://github.com/dutu/bitx-api-node"
+```
+
 
 ### BitX([keyId, keySecret][options])
 To access the private Luno API methods you must supply your key id and key secret as the first two arguments. If you are only accessing the public API endpoints you can leave these two arguments out.
 
 The optional `options` argument can be used to override the default options. The default options are equivalent to:
 
-```javascript
+```js
 {
   hostname: 'api.luno.com',
   port: 443,
