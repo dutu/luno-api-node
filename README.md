@@ -2,8 +2,8 @@
 
 A simple wrapper for the Luno API. The module supports promise and callbacks.
 
-> This module is forked from https://github.com/bausmeier/node-luno. 
-> Since the original repository seems not to be maintained anymore, starting with version v1.10.1 this fork has been detached from original repository, and it is now stand alone. Contributions are not pull-requested to original repository.
+> This module is forked from https://github.com/bausmeier/node-bitx. 
+> Since the original repository seems not to be maintained anymore, starting with version v2.0.0 this fork has been detached from original repository. It is now stand alone. Contributions are not pull-requested to original repository.
 
 ## Usage
 Add luno as a dependency:
