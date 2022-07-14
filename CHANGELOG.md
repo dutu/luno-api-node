@@ -1,3 +1,7 @@
+### 2.0.1 (2022-07-14)
+
+* Add debug option to output API call requests and responses 
+
 ### 2.0.0 (2022-07-14)
 
 * Repository detached from original (and the fork is now stand alone)

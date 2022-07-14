@@ -1,6 +1,6 @@
 {
   "name": "luno-api-node",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "dutu@protonmail.com",
   "description": "A simple wrapper for the Luno API.",
   "license": "MIT",
@@ -26,5 +26,8 @@
     "codecov": "^3.8.3",
     "sinon": "^14.0.0",
     "tap": "^16.3.0"
+  },
+  "dependencies": {
+    "debug": "^4.3.4"
   }
 }
