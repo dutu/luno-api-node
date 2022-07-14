@@ -1,10 +1,10 @@
 'use strict'
 
-var BitX = require('../lib/BitX')
+var Luno = require('../lib/luno')
 
-var bitx = new BitX()
+var luno = new Luno()
 
-bitx.getTicker(function (err, ticker) {
+luno.getTicker(function (err, ticker) {
   if (err) {
     throw err
   }

@@ -1,7 +1,9 @@
-### 2.0.0 (2022-07-13)
+### 2.0.0 (2022-07-14)
 
 * Repository detached from original (and the fork is now stand alone)
-* Add `apiCallRate` value to the error message, when an `ErrTooManyRequests` occurs 
+* all Bitx usages renamed to Luno
+* Add `apiCallRate` value to the error message, when an `ErrTooManyRequests` occurs
+* remove method `getLimits()`
 
 ### 1.10.0 (2022-06-20)
 

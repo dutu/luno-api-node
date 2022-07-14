@@ -1,23 +1,19 @@
-# bitx-api-node
+# luno-api-node
 
 A simple wrapper for the Luno API. The module supports promise and callbacks.
 
-> This module is forked from https://github.com/bausmeier/node-bitx. 
-> Since the original repository seems not to be maintained anymore, starting with version v1.10.1 this fork has been detached from original repository, and it is now stand alone. Contributions starting with v1.10.1 are not pull-requested to original repository.
+> This module is forked from https://github.com/bausmeier/node-luno. 
+> Since the original repository seems not to be maintained anymore, starting with version v1.10.1 this fork has been detached from original repository, and it is now stand alone. Contributions are not pull-requested to original repository.
 
 ## Usage
-Add bitx as a dependency:
+Add luno as a dependency:
 
 ```bash
-$ npm install --save bitx-api-node
-```
-or
-```bash
-$ npm install --save "git+https://github.com/dutu/bitx-api-node"
+$ npm install --save luno-api-node
 ```
 
 
-### BitX([keyId, keySecret][options])
+### Luno([keyId, keySecret][options])
 To access the private Luno API methods you must supply your key id and key secret as the first two arguments. If you are only accessing the public API endpoints you can leave these two arguments out.
 
 The optional `options` argument can be used to override the default options. The default options are equivalent to:
@@ -44,7 +40,7 @@ See Luno API documentation for applicable rate limitations: https://www.luno.com
 Example:
 
 ```javascript
-console.log(bitx.apiCallRate)
+console.log(luno.apiCallRate)
 ```
 
 
@@ -66,14 +62,14 @@ Default options:
 
 ```javascript
 {
-  pair: bitx.pair
+  pair: luno.pair
 }
 ```
 
 Example:
 
 ```javascript
-bitx.getTicker(function(err, ticker) {});
+luno.getTicker(function(err, ticker) {});
 ```
 
 ### getAllTickers([callback])
@@ -82,7 +78,7 @@ GET https://api.luno.com/api/1/tickers
 Example:
 
 ```javascript
-bitx.getAllTickers(function(err, tickers) {});
+luno.getAllTickers(function(err, tickers) {});
 ```
 
 ### getOrderBook([options][, callback])
@@ -92,14 +88,14 @@ Default options:
 
 ```javascript
 {
-  pair: bitx.pair
+  pair: luno.pair
 }
 ```
 
 Example:
 
 ```javascript
-bitx.getOrderBook(function(err, orderBook) {});
+luno.getOrderBook(function(err, orderBook) {});
 ```
 
 ### getTrades([options][, callback])
@@ -109,14 +105,14 @@ Default options:
 
 ```javascript
 {
-  pair: bitx.pair
+  pair: luno.pair
 }
 ```
 
 Example:
 
 ```javascript
-bitx.getTrades(function(err, trades) {});
+luno.getTrades(function(err, trades) {});
 ```
 
 ### getTradeList([options][, callback])
@@ -126,14 +122,14 @@ Default options:
 
 ```javascript
 {
-  pair: bitx.pair
+  pair: luno.pair
 }
 ```
 
 Example:
 
 ```javascript
-bitx.getTradeList({sort_desc: true, limit: 10}, function(err, tradeList) {});
+luno.getTradeList({sort_desc: true, limit: 10}, function(err, tradeList) {});
 ```
 
 ### getOrderList([options][, callback])
@@ -143,7 +139,7 @@ Default options:
 
 ```javascript
 {
-  pair: bitx.pair,
+  pair: luno.pair,
   state: undefined
 }
 ```
@@ -151,7 +147,7 @@ Default options:
 Example:
 
 ```javascript
-bitx.getOrderList({state: 'PENDING'}, function(err, orderList) {});
+luno.getOrderList({state: 'PENDING'}, function(err, orderList) {});
 ```
 
 ### getOrderListV2([options][, callback])
@@ -161,7 +157,7 @@ Default options:
 
 ```javascript
 {
-  pair: bitx.pair,
+  pair: luno.pair,
   state: undefined
 }
 ```
@@ -169,7 +165,7 @@ Default options:
 Example:
 
 ```javascript
-bitx.getOrderListV2({ closed: true }, function(err, orderList) {});
+luno.getOrderListV2({ closed: true }, function(err, orderList) {});
 ```
 
 ### getOrderListV3(options[, callback])
@@ -178,7 +174,7 @@ GET https://api.luno.com/api/exchange/3/order
 Example:
 
 ```javascript
-bitx.getOrderListV3({id: 'BXMC2CJ7HNB88U4' }, function(err, orderList) {});
+luno.getOrderListV3({id: 'BXMC2CJ7HNB88U4' }, function(err, orderList) {});
 ```
 
 ### getBalance([asset][, callback])
@@ -187,7 +183,7 @@ GET https://api.luno.com/api/1/balance
 Example:
 
 ```javascript
-bitx.getBalance('ZAR', function(err, balance) {});
+luno.getBalance('ZAR', function(err, balance) {});
 ```
 
 ### getFundingAddress(asset[, options][, callback])
@@ -204,7 +200,7 @@ Default options:
 Example:
 
 ```javascript
-bitx.getFundingAddress('XBT', {address: 'B1tC0InExAMPL3fundIN6AdDreS5t0Use'}, function(err, fundingAddress) {});
+luno.getFundingAddress('XBT', {address: 'B1tC0InExAMPL3fundIN6AdDreS5t0Use'}, function(err, fundingAddress) {});
 ```
 
 ### createFundingAddress(asset[, callback])
@@ -213,7 +209,7 @@ POST https://api.luno.com/api/1/funding_address
 Example:
 
 ```javascript
-bitx.createFundingAddress('XBT', function(err, fundingAddress) {});
+luno.createFundingAddress('XBT', function(err, fundingAddress) {});
 ```
 
 ### getFeeInfo([options][, callback])
@@ -223,14 +219,14 @@ Default options:
 
 ```javascript
 {
-  pair: bitx.pair
+  pair: luno.pair
 }
 ```
 
 Example:
 
 ```javascript
-bitx.getFeeInfo({pair: 'XBTZAR'}, function(err, feeInfo) {});
+luno.getFeeInfo({pair: 'XBTZAR'}, function(err, feeInfo) {});
 ```
 
 ### postBuyOrder(volume, price[, options][, callback])
@@ -239,7 +235,7 @@ POST https://api.luno.com/api/1/postorder
 Example:
 
 ```javascript
-bitx.postBuyOrder(9999.99, 0.01, function(err, order) {});
+luno.postBuyOrder(9999.99, 0.01, function(err, order) {});
 ```
 
 ### postSellOrder(volume, price[, options][, callback])
@@ -248,7 +244,7 @@ POST https://api.luno.com/api/1/postorder
 Example:
 
 ```javascript
-bitx.postSellOrder(0.01, 9999.99, function(err, order) {});
+luno.postSellOrder(0.01, 9999.99, function(err, order) {});
 ```
 
 ### postMarketBuyOrder(volume[, options][, callback])
@@ -257,7 +253,7 @@ POST https://api.luno.com/api/1/marketorder
 Example:
 
 ```javascript
-bitx.postMarketBuyOrder(0.01, function(err, order) {});
+luno.postMarketBuyOrder(0.01, function(err, order) {});
 ```
 
 ### postMarketSellOrder(volume[, options][, callback])
@@ -266,7 +262,7 @@ POST https://api.luno.com/api/1/marketorder
 Example:
 
 ```javascript
-bitx.postMarketSellOrder(0.01, function(err, order) {});
+luno.postMarketSellOrder(0.01, function(err, order) {});
 ```
 
 ### stopOrder(orderId[, callback])
@@ -275,7 +271,7 @@ POST https://api.luno.com/api/1/stoporder
 Example:
 
 ```javascript
-bitx.stopOrder('BXMC2CJ7HNB88U4', function(err, result) {});
+luno.stopOrder('BXMC2CJ7HNB88U4', function(err, result) {});
 ```
 
 ### getOrder(orderId[, callback])
@@ -284,7 +280,7 @@ GET https://api.luno.com/api/1/orders/{orderId}
 Example:
 
 ```javascript
-bitx.getOrder('BXHW6PFRRXKFSB4', function(err, result) {});
+luno.getOrder('BXHW6PFRRXKFSB4', function(err, result) {});
 ```
 
 ### getOrderV2(orderId[, callback])
@@ -293,7 +289,7 @@ GET https://api.luno.com/api/exchange/2/orders/{orderId}
 Example:
 
 ```javascript
-bitx.getOrder('BXHW6PFRRXKFSB4', function(err, result) {});
+luno.getOrder('BXHW6PFRRXKFSB4', function(err, result) {});
 ```
 
 ### getTransactions(asset[, options][, callback])
@@ -310,7 +306,7 @@ Default options:
 Example:
 
 ```javascript
-bitx.getTransactions('XBT', {offset: 5, limit: 20}, function(err, transactions) {});
+luno.getTransactions('XBT', {offset: 5, limit: 20}, function(err, transactions) {});
 ```
 
 ### getWithdrawals([callback])
@@ -319,7 +315,7 @@ GET https://api.luno.com/api/1/withdrawals
 Example:
 
 ```javascript
-bitx.getWithdrawals(function(err, withdrawals) {});
+luno.getWithdrawals(function(err, withdrawals) {});
 ```
 
 ### getWithdrawal(withdrawalId[, callback])
@@ -328,7 +324,7 @@ GET https://api.luno.com/api/1/withdrawals/{withdrawalId}
 Example:
 
 ```javascript
-bitx.getWithdrawal('1212', function(err, withdrawal) {});
+luno.getWithdrawal('1212', function(err, withdrawal) {});
 ```
 
 ### requestWithdrawal(type, amount[, callback])
@@ -337,7 +333,7 @@ POST https://api.luno.com/api/1/withdrawals
 Example:
 
 ```javascript
-bitx.requestWithdrawal('ZAR_EFT', 1000, function(err, withdrawal) {});
+luno.requestWithdrawal('ZAR_EFT', 1000, function(err, withdrawal) {});
 ```
 
 ### cancelWithdrawal(withdrawalId[, callback])
@@ -346,11 +342,9 @@ DELETE https://api.luno.com/api/1/withdrawals/{withdrawalId}
 Example:
 
 ```javascript
-bitx.cancelWithdrawal('1212', function(err, withdrawal) {});
+luno.cancelWithdrawal('1212', function(err, withdrawal) {});
 ```
 
 ## Contributing
 
-Like my work? Please donate **1E1sebnWax5Br2mp8y9dox6oX9Snmf42uz**.
-
-Don't like it? Open a pull request or create an issue and help me improve it.
+Open a pull request or create an issue and help me improve it.

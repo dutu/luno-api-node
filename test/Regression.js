@@ -1,19 +1,19 @@
 'use strict'
 
-var BitX = require('..')
-var https = require('https')
-var fs = require('fs')
-var path = require('path')
-var tap = require('tap')
+const Luno = require('../lib/luno')
+const https = require('https')
+const fs = require('fs')
+const path = require('path')
+const tap = require('tap')
 
 tap.test('GET after POST', (t) => {
-  var options = {
+  const options = {
     key: fs.readFileSync(path.join(__dirname, 'ssl', 'server', 'test.key')),
     cert: fs.readFileSync(path.join(__dirname, 'ssl', 'server', 'test.crt'))
   }
-  var server = https.createServer(options).listen(process.env.PORT || 0, 'localhost', function () {
-    var address = server.address()
-    var bitx = new BitX('keyId', 'keySecret', {
+  const server = https.createServer(options).listen(process.env.PORT || 0, 'localhost', function () {
+    const address = server.address()
+    const luno = new Luno('keyId', 'keySecret', {
       hostname: 'localhost',
       port: address.port,
       ca: fs.readFileSync(path.join(__dirname, 'ssl', 'ca', 'root.pem'))
@@ -35,7 +35,7 @@ tap.test('GET after POST', (t) => {
         })
       })
 
-      bitx.postBuyOrder(9999.99, 0.0001, function (err, order) {
+      luno.postBuyOrder(9999.99, 0.0001, function (err, order) {
         t.error(err)
 
         server.once('request', function (req, res) {
@@ -44,7 +44,7 @@ tap.test('GET after POST', (t) => {
           res.end(JSON.stringify({}))
         })
 
-        bitx.getTicker(function (err, ticker) {
+        luno.getTicker(function (err, ticker) {
           t.error(err)
           t.end()
         })

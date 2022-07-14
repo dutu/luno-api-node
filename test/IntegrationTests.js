@@ -1,23 +1,23 @@
 'use strict'
 
-var BitX = require('../lib/BitX')
-var fs = require('fs')
-var https = require('https')
-var path = require('path')
-var querystring = require('querystring')
-var tap = require('tap')
+const Luno = require('../lib/luno')
+const fs = require('fs')
+const https = require('https')
+const path = require('path')
+const querystring = require('querystring')
+const tap = require('tap')
 
-var port = process.env.PORT || 8001
-var bitx = new BitX('keyId', 'keySecret', {
+const port = process.env.PORT || 8001
+const luno = new Luno('keyId', 'keySecret', {
   hostname: 'localhost',
   port: port,
   ca: fs.readFileSync(path.join(__dirname, 'ssl', 'ca', 'root.pem'))
 })
-var options = {
+const options = {
   key: fs.readFileSync(path.join(__dirname, 'ssl', 'server', 'test.key')),
   cert: fs.readFileSync(path.join(__dirname, 'ssl', 'server', 'test.crt'))
 }
-var server = https.createServer(options).listen(port, 'localhost')
+const server = https.createServer(options).listen(port, 'localhost')
 
 tap.afterEach(function () {
   server.removeAllListeners('request')
@@ -28,7 +28,7 @@ tap.teardown(function (done) {
 })
 
 tap.test('getTicker returns expected ticker', function (t) {
-  var expectedTicker = {
+  const expectedTicker = {
     timestamp: 1366224386716,
     currency: 'ZAR',
     bid: '924.00',
@@ -43,7 +43,7 @@ tap.test('getTicker returns expected ticker', function (t) {
     res.end(JSON.stringify(expectedTicker))
   })
 
-  bitx.getTicker(function (err, ticker) {
+  luno.getTicker(function (err, ticker) {
     t.error(err)
     t.same(ticker, expectedTicker)
     t.end()
@@ -51,7 +51,7 @@ tap.test('getTicker returns expected ticker', function (t) {
 })
 
 tap.test('getAllTickers returns expected tickers', function (t) {
-  var expectedTickers = {
+  const expectedTickers = {
     tickers: [
       {
         timestamp: 1405413955793,
@@ -78,7 +78,7 @@ tap.test('getAllTickers returns expected tickers', function (t) {
     res.end(JSON.stringify(expectedTickers))
   })
 
-  bitx.getAllTickers(function (err, tickers) {
+  luno.getAllTickers(function (err, tickers) {
     t.error(err)
     t.same(tickers, expectedTickers)
     t.end()
@@ -86,7 +86,7 @@ tap.test('getAllTickers returns expected tickers', function (t) {
 })
 
 tap.test('getOrderBook returns the expected order book', function (t) {
-  var expectedOrderBook = {
+  const expectedOrderBook = {
     timestamp: 1366305398592,
     currency: 'ZAR',
     asks: [
@@ -106,7 +106,7 @@ tap.test('getOrderBook returns the expected order book', function (t) {
     res.end(JSON.stringify(expectedOrderBook))
   })
 
-  bitx.getOrderBook(function (err, orderBook) {
+  luno.getOrderBook(function (err, orderBook) {
     t.error(err)
     t.same(orderBook, expectedOrderBook)
     t.end()
@@ -114,7 +114,7 @@ tap.test('getOrderBook returns the expected order book', function (t) {
 })
 
 tap.test('getTrades should return the expected trades', function (t) {
-  var expectedTrades = {
+  const expectedTrades = {
     currency: 'ZAR',
     trades: [
       {timestamp: 1366052621774, price: '1000.00', volume: '0.10'},
@@ -128,7 +128,7 @@ tap.test('getTrades should return the expected trades', function (t) {
     res.end(JSON.stringify(expectedTrades))
   })
 
-  bitx.getTrades(function (err, trades) {
+  luno.getTrades(function (err, trades) {
     t.error(err)
     t.same(trades, expectedTrades)
     t.end()
@@ -136,7 +136,7 @@ tap.test('getTrades should return the expected trades', function (t) {
 })
 
 tap.test('getOrderList should return the expected order list', function (t) {
-  var expectedOrderList = {
+  const expectedOrderList = {
     orders: [
       {
         order_id: 'BXMC2CJ7HNB88U4',
@@ -160,7 +160,7 @@ tap.test('getOrderList should return the expected order list', function (t) {
     res.end(JSON.stringify(expectedOrderList))
   })
 
-  bitx.getOrderList(function (err, orderList) {
+  luno.getOrderList(function (err, orderList) {
     t.error(err)
     t.same(orderList, expectedOrderList)
     t.end()
@@ -168,7 +168,7 @@ tap.test('getOrderList should return the expected order list', function (t) {
 })
 
 tap.test('getOrderList should return the expected order list for the given state', function (t) {
-  var expectedOrderList = {
+  const expectedOrderList = {
     orders: [
       {
         order_id: 'BXMC2CJ7HNB88U4',
@@ -192,10 +192,10 @@ tap.test('getOrderList should return the expected order list for the given state
     res.end(JSON.stringify(expectedOrderList))
   })
 
-  var options = {
+  const options = {
     state: 'PENDING'
   }
-  bitx.getOrderList(options, function (err, orderList) {
+  luno.getOrderList(options, function (err, orderList) {
     t.error(err)
     t.same(orderList, expectedOrderList)
     t.end()
@@ -203,7 +203,7 @@ tap.test('getOrderList should return the expected order list for the given state
 })
 
 tap.test('getTradeList should return the expected trade list', function (t) {
-  var expectedTradeList = {
+  const expectedTradeList = {
     trades: [
       {
         pair: 'XBTZAR',
@@ -242,7 +242,7 @@ tap.test('getTradeList should return the expected trade list', function (t) {
     res.end(JSON.stringify(expectedTradeList))
   })
 
-  bitx.getTradeList(function (err, orderList) {
+  luno.getTradeList(function (err, orderList) {
     t.error(err)
     t.same(orderList, expectedTradeList)
     t.end()
@@ -250,7 +250,7 @@ tap.test('getTradeList should return the expected trade list', function (t) {
 })
 
 tap.test('getOrderList should return the expected trade list with expected limit', function (t) {
-  var expectedOrderList = {
+  const expectedOrderList = {
     trades: [
       {
         pair: 'XBTZAR',
@@ -275,37 +275,18 @@ tap.test('getOrderList should return the expected trade list with expected limit
     res.end(JSON.stringify(expectedOrderList))
   })
 
-  var options = {
+  const options = {
     limit: 1
   }
-  bitx.getTradeList(options, function (err, orderList) {
+  luno.getTradeList(options, function (err, orderList) {
     t.error(err)
     t.same(orderList, expectedOrderList)
     t.end()
   })
 })
 
-tap.test('getLimits should return the expected limits', function (t) {
-  var expectedLimits = {
-    ask_btc_limit: '1.00',
-    bid_zar_limit: '1000.00'
-  }
-
-  server.on('request', function (req, res) {
-    t.equal(req.method, 'GET')
-    t.equal(req.url, '/api/1/BTCZAR/getlimits')
-    res.end(JSON.stringify(expectedLimits))
-  })
-
-  bitx.getLimits(function (err, limits) {
-    t.error(err)
-    t.same(limits, expectedLimits)
-    t.end()
-  })
-})
-
 tap.test('getFeeInfo should return the expected fee info', function (t) {
-  var expectedFeeInfo = {
+  const expectedFeeInfo = {
     maker_fee: '0.00',
     taker_fee: '0.01',
     thirty_day_volume: '0.016336'
@@ -317,7 +298,7 @@ tap.test('getFeeInfo should return the expected fee info', function (t) {
     res.end(JSON.stringify(expectedFeeInfo))
   })
 
-  bitx.getFeeInfo(function (err, limits) {
+  luno.getFeeInfo(function (err, limits) {
     t.error(err)
     t.same(limits, expectedFeeInfo)
     t.end()
@@ -325,7 +306,7 @@ tap.test('getFeeInfo should return the expected fee info', function (t) {
 })
 
 tap.test('getFeeInfo should accept options', function (t) {
-  var expectedFeeInfo = {
+  const expectedFeeInfo = {
     maker_fee: '0.00',
     taker_fee: '0.01',
     thirty_day_volume: '0.016336'
@@ -337,7 +318,7 @@ tap.test('getFeeInfo should accept options', function (t) {
     res.end(JSON.stringify(expectedFeeInfo))
   })
 
-  bitx.getFeeInfo({pair: 'XBTZAR'}, function (err, limits) {
+  luno.getFeeInfo({pair: 'XBTZAR'}, function (err, limits) {
     t.error(err)
     t.same(limits, expectedFeeInfo)
     t.end()
@@ -345,15 +326,15 @@ tap.test('getFeeInfo should accept options', function (t) {
 })
 
 tap.test('postBuyOrder should post the correct fields and return an order id', function (t) {
-  var expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
-  var volume = 9999.99
-  var price = 0.0001
+  const expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
+  const volume = 9999.99
+  const price = 0.0001
 
   server.on('request', function (req, res) {
     t.equal(req.method, 'POST')
     t.equal(req.url, '/api/1/postorder')
     t.equal(req.headers['content-type'], 'application/x-www-form-urlencoded')
-    var body = ''
+    let body = ''
     req.on('data', function (data) {
       body += data
     })
@@ -367,7 +348,7 @@ tap.test('postBuyOrder should post the correct fields and return an order id', f
     })
   })
 
-  bitx.postBuyOrder(volume, price, function (err, order) {
+  luno.postBuyOrder(volume, price, function (err, order) {
     t.error(err)
     t.same(order, expectedOrder)
     t.end()
@@ -375,15 +356,15 @@ tap.test('postBuyOrder should post the correct fields and return an order id', f
 })
 
 tap.test('postBuyOrder should accept options', function (t) {
-  var expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
-  var volume = 9999.99
-  var price = 0.0001
+  const expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
+  const volume = 9999.99
+  const price = 0.0001
 
   server.on('request', function (req, res) {
     t.equal(req.method, 'POST')
     t.equal(req.url, '/api/1/postorder')
     t.equal(req.headers['content-type'], 'application/x-www-form-urlencoded')
-    var body = ''
+    let body = ''
     req.on('data', function (data) {
       body += data
     })
@@ -397,7 +378,7 @@ tap.test('postBuyOrder should accept options', function (t) {
     })
   })
 
-  bitx.postBuyOrder(volume, price, {post_only: true}, function (err, order) {
+  luno.postBuyOrder(volume, price, {post_only: true}, function (err, order) {
     t.error(err)
     t.same(order, expectedOrder)
     t.end()
@@ -405,7 +386,7 @@ tap.test('postBuyOrder should accept options', function (t) {
 })
 
 tap.test('postBuyOrder should return an error if the order would exceed order limits', function (t) {
-  var expectedError = 'Order would exceed your order limits.'
+  const expectedError = 'Order would exceed your order limits.'
 
   server.on('request', function (req, res) {
     t.equal(req.method, 'POST')
@@ -413,19 +394,19 @@ tap.test('postBuyOrder should return an error if the order would exceed order li
     res.end(JSON.stringify({error: expectedError}))
   })
 
-  bitx.postBuyOrder(9999.99, 0.01, function (err) {
+  luno.postBuyOrder(9999.99, 0.01, function (err) {
     t.equal(err.message, expectedError)
     t.end()
   })
 })
 
 tap.test('postMarketBuyOrder should post the correct fields and return an order id', function (t) {
-  var expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
+  const expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
 
   server.on('request', function (req, res) {
     t.equal(req.method, 'POST')
     t.equal(req.url, '/api/1/marketorder')
-    var body = ''
+    let body = ''
     req.on('data', function (data) {
       body += data
     })
@@ -438,7 +419,7 @@ tap.test('postMarketBuyOrder should post the correct fields and return an order 
     })
   })
 
-  bitx.postMarketBuyOrder('100.50', function (err, order) {
+  luno.postMarketBuyOrder('100.50', function (err, order) {
     t.error(err)
     t.same(order, expectedOrder)
     t.end()
@@ -446,12 +427,12 @@ tap.test('postMarketBuyOrder should post the correct fields and return an order 
 })
 
 tap.test('postMarketBuyOrder should accept options', function (t) {
-  var expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
+  const expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
 
   server.on('request', function (req, res) {
     t.equal(req.method, 'POST')
     t.equal(req.url, '/api/1/marketorder')
-    var body = ''
+    let body = ''
     req.on('data', function (data) {
       body += data
     })
@@ -464,7 +445,7 @@ tap.test('postMarketBuyOrder should accept options', function (t) {
     })
   })
 
-  bitx.postMarketBuyOrder('100.50', {base_account_id: 12345}, function (err, order) {
+  luno.postMarketBuyOrder('100.50', {base_account_id: 12345}, function (err, order) {
     t.error(err)
     t.same(order, expectedOrder)
     t.end()
@@ -472,15 +453,15 @@ tap.test('postMarketBuyOrder should accept options', function (t) {
 })
 
 tap.test('postSellOrder should post the correct fields and return an order id', function (t) {
-  var expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
-  var volume = 0.001
-  var price = 9999.99
+  const expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
+  const volume = 0.001
+  const price = 9999.99
 
   server.on('request', function (req, res) {
     t.equal(req.method, 'POST')
     t.equal(req.url, '/api/1/postorder')
     t.equal(req.headers['content-type'], 'application/x-www-form-urlencoded')
-    var body = ''
+    let body = ''
     req.on('data', function (data) {
       body += data
     })
@@ -494,7 +475,7 @@ tap.test('postSellOrder should post the correct fields and return an order id', 
     })
   })
 
-  bitx.postSellOrder(volume, price, function (err, order) {
+  luno.postSellOrder(volume, price, function (err, order) {
     t.error(err)
     t.same(order, expectedOrder)
     t.end()
@@ -502,15 +483,15 @@ tap.test('postSellOrder should post the correct fields and return an order id', 
 })
 
 tap.test('postSellOrder should accept options', function (t) {
-  var expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
-  var volume = 0.001
-  var price = 9999.99
+  const expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
+  const volume = 0.001
+  const price = 9999.99
 
   server.on('request', function (req, res) {
     t.equal(req.method, 'POST')
     t.equal(req.url, '/api/1/postorder')
     t.equal(req.headers['content-type'], 'application/x-www-form-urlencoded')
-    var body = ''
+    let body = ''
     req.on('data', function (data) {
       body += data
     })
@@ -524,7 +505,7 @@ tap.test('postSellOrder should accept options', function (t) {
     })
   })
 
-  bitx.postSellOrder(volume, price, {post_only: true}, function (err, order) {
+  luno.postSellOrder(volume, price, {post_only: true}, function (err, order) {
     t.error(err)
     t.same(order, expectedOrder)
     t.end()
@@ -532,12 +513,12 @@ tap.test('postSellOrder should accept options', function (t) {
 })
 
 tap.test('postMarketSellOrder should post the correct fields and return an order id', function (t) {
-  var expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
+  const expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
 
   server.on('request', function (req, res) {
     t.equal(req.method, 'POST')
     t.equal(req.url, '/api/1/marketorder')
-    var body = ''
+    let body = ''
     req.on('data', function (data) {
       body += data
     })
@@ -550,7 +531,7 @@ tap.test('postMarketSellOrder should post the correct fields and return an order
     })
   })
 
-  bitx.postMarketSellOrder('100.50', function (err, order) {
+  luno.postMarketSellOrder('100.50', function (err, order) {
     t.error(err)
     t.same(order, expectedOrder)
     t.end()
@@ -558,12 +539,12 @@ tap.test('postMarketSellOrder should post the correct fields and return an order
 })
 
 tap.test('postMarketSellOrder should accept options', function (t) {
-  var expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
+  const expectedOrder = {order_id: 'BXMC2CJ7HNB88U4'}
 
   server.on('request', function (req, res) {
     t.equal(req.method, 'POST')
     t.equal(req.url, '/api/1/marketorder')
-    var body = ''
+    let body = ''
     req.on('data', function (data) {
       body += data
     })
@@ -576,7 +557,7 @@ tap.test('postMarketSellOrder should accept options', function (t) {
     })
   })
 
-  bitx.postMarketSellOrder('100.50', {base_account_id: 12345}, function (err, order) {
+  luno.postMarketSellOrder('100.50', {base_account_id: 12345}, function (err, order) {
     t.error(err)
     t.same(order, expectedOrder)
     t.end()
@@ -584,14 +565,14 @@ tap.test('postMarketSellOrder should accept options', function (t) {
 })
 
 tap.test('stopOrder should post the order id and return success', function (t) {
-  var expectedResult = {success: true}
-  var orderId = 'BXMC2CJ7HNB88U4'
+  const expectedResult = {success: true}
+  const orderId = 'BXMC2CJ7HNB88U4'
 
   server.on('request', function (req, res) {
     t.equal(req.method, 'POST')
     t.equal(req.url, '/api/1/stoporder')
     t.equal(req.headers['content-type'], 'application/x-www-form-urlencoded')
-    var body = ''
+    let body = ''
     req.on('data', function (data) {
       body += data
     })
@@ -602,7 +583,7 @@ tap.test('stopOrder should post the order id and return success', function (t) {
     })
   })
 
-  bitx.stopOrder(orderId, function (err, result) {
+  luno.stopOrder(orderId, function (err, result) {
     t.error(err)
     t.same(result, expectedResult)
     t.end()
@@ -610,7 +591,7 @@ tap.test('stopOrder should post the order id and return success', function (t) {
 })
 
 tap.test('stopOrder should return an error if the order is unknown or non-pending', function (t) {
-  var expectedError = 'Cannot stop unknown or non-pending order'
+  const expectedError = 'Cannot stop unknown or non-pending order'
 
   server.on('request', function (req, res) {
     t.equal(req.method, 'POST')
@@ -618,14 +599,14 @@ tap.test('stopOrder should return an error if the order is unknown or non-pendin
     res.end(JSON.stringify({error: expectedError}))
   })
 
-  bitx.stopOrder('BXMC2CJ7HNB88U4', function (err) {
+  luno.stopOrder('BXMC2CJ7HNB88U4', function (err) {
     t.equal(err.message, expectedError)
     t.end()
   })
 })
 
 tap.test('getOrder should return the order', function (t) {
-  var expectedOrder = {
+  const expectedOrder = {
     order_id: 'BXHW6PFRRXKFSB4',
     creation_timestamp: 1402866878367,
     expiration_timestamp: 0,
@@ -657,7 +638,7 @@ tap.test('getOrder should return the order', function (t) {
     res.end(JSON.stringify(expectedOrder))
   })
 
-  bitx.getOrder('BXHW6PFRRXKFSB4', function (err, order) {
+  luno.getOrder('BXHW6PFRRXKFSB4', function (err, order) {
     t.error(err)
     t.same(order, expectedOrder)
     t.end()
@@ -665,7 +646,7 @@ tap.test('getOrder should return the order', function (t) {
 })
 
 tap.test('getBalance should return all balances when no asset parameter is provided', function (t) {
-  var expectedBalances = {
+  const expectedBalances = {
     balance: [
       {
         account_id: '1224342323',
@@ -689,7 +670,7 @@ tap.test('getBalance should return all balances when no asset parameter is provi
     res.end(JSON.stringify(expectedBalances))
   })
 
-  bitx.getBalance(function (err, balances) {
+  luno.getBalance(function (err, balances) {
     t.error(err)
     t.same(balances, expectedBalances)
     t.end()
@@ -697,7 +678,7 @@ tap.test('getBalance should return all balances when no asset parameter is provi
 })
 
 tap.test('getBalance should return the balance for the specified asset', function (t) {
-  var expectedBalances = {
+  const expectedBalances = {
     balance: [
       {
         asset: 'ZAR',
@@ -713,7 +694,7 @@ tap.test('getBalance should return the balance for the specified asset', functio
     res.end(JSON.stringify(expectedBalances))
   })
 
-  bitx.getBalance('ZAR', function (err, balances) {
+  luno.getBalance('ZAR', function (err, balances) {
     t.error(err)
     t.same(balances, expectedBalances)
     t.end()
@@ -721,7 +702,7 @@ tap.test('getBalance should return the balance for the specified asset', functio
 })
 
 tap.test('getFundingAddress should return the funding address', function (t) {
-  var expectedFundingAddress = {
+  const expectedFundingAddress = {
     asset: 'XBT',
     address: 'B1tC0InExAMPL3fundIN6AdDreS5t0Use',
     total_received: '1.234567',
@@ -734,7 +715,7 @@ tap.test('getFundingAddress should return the funding address', function (t) {
     res.end(JSON.stringify(expectedFundingAddress))
   })
 
-  bitx.getFundingAddress('XBT', function (err, fundingAddress) {
+  luno.getFundingAddress('XBT', function (err, fundingAddress) {
     t.error(err)
     t.same(fundingAddress, expectedFundingAddress)
     t.end()
@@ -742,7 +723,7 @@ tap.test('getFundingAddress should return the funding address', function (t) {
 })
 
 tap.test('getFundingAddress should return the funding address specified', function (t) {
-  var expectedFundingAddress = {
+  const expectedFundingAddress = {
     asset: 'XBT',
     address: 'B1tC0InExAMPL3fundIN6AdDreS5t0Use',
     total_received: '1.234567',
@@ -755,10 +736,10 @@ tap.test('getFundingAddress should return the funding address specified', functi
     res.end(JSON.stringify(expectedFundingAddress))
   })
 
-  var options = {
+  const options = {
     address: 'B1tC0InExAMPL3fundIN6AdDreS5t0Use'
   }
-  bitx.getFundingAddress('XBT', options, function (err, fundingAddress) {
+  luno.getFundingAddress('XBT', options, function (err, fundingAddress) {
     t.error(err)
     t.same(fundingAddress, expectedFundingAddress)
     t.end()
@@ -766,7 +747,7 @@ tap.test('getFundingAddress should return the funding address specified', functi
 })
 
 tap.test('createFundingAddress should return a new funding address', function (t) {
-  var expectedFundingAddress = {
+  const expectedFundingAddress = {
     asset: 'XBT',
     address: 'B1tC0InExAMPL3fundIN6AdDreS5t0Use',
     total_received: '0.00',
@@ -776,7 +757,7 @@ tap.test('createFundingAddress should return a new funding address', function (t
   server.on('request', function (req, res) {
     t.equal(req.method, 'POST')
     t.equal(req.url, '/api/1/funding_address')
-    var body = ''
+    let body = ''
     req.on('data', function (data) {
       body += data
     })
@@ -787,7 +768,7 @@ tap.test('createFundingAddress should return a new funding address', function (t
     })
   })
 
-  bitx.createFundingAddress('XBT', function (err, fundingAddress) {
+  luno.createFundingAddress('XBT', function (err, fundingAddress) {
     t.error(err)
     t.same(fundingAddress, expectedFundingAddress)
     t.end()
@@ -795,7 +776,7 @@ tap.test('createFundingAddress should return a new funding address', function (t
 })
 
 tap.test('getTransactions should return the transactions', function (t) {
-  var expectedTransactions = {
+  const expectedTransactions = {
     total_count: 77,
     transactions: [
       {
@@ -825,7 +806,7 @@ tap.test('getTransactions should return the transactions', function (t) {
     res.end(JSON.stringify(expectedTransactions))
   })
 
-  bitx.getTransactions('XBT', function (err, transactions) {
+  luno.getTransactions('XBT', function (err, transactions) {
     t.error(err)
     t.same(transactions, expectedTransactions)
     t.end()
@@ -833,7 +814,7 @@ tap.test('getTransactions should return the transactions', function (t) {
 })
 
 tap.test('getTransactions should send options and return the transactions', function (t) {
-  var expectedTransactions = {
+  const expectedTransactions = {
     total_count: 77,
     transactions: [
       {
@@ -863,11 +844,11 @@ tap.test('getTransactions should send options and return the transactions', func
     res.end(JSON.stringify(expectedTransactions))
   })
 
-  var options = {
+  const options = {
     offset: 5,
     limit: 5
   }
-  bitx.getTransactions('XBT', options, function (err, transactions) {
+  luno.getTransactions('XBT', options, function (err, transactions) {
     t.error(err)
     t.same(transactions, expectedTransactions)
     t.end()
@@ -875,7 +856,7 @@ tap.test('getTransactions should send options and return the transactions', func
 })
 
 tap.test('getWithdrawals should return the withdrawals', function (t) {
-  var expectedWithdrawls = {
+  const expectedWithdrawls = {
     withdrawals: [
       {
         status: 'PENDING',
@@ -894,7 +875,7 @@ tap.test('getWithdrawals should return the withdrawals', function (t) {
     res.end(JSON.stringify(expectedWithdrawls))
   })
 
-  bitx.getWithdrawals(function (err, withdrawals) {
+  luno.getWithdrawals(function (err, withdrawals) {
     t.error(err)
     t.same(withdrawals, expectedWithdrawls)
     t.end()
@@ -902,7 +883,7 @@ tap.test('getWithdrawals should return the withdrawals', function (t) {
 })
 
 tap.test('getWithdrawal should return the withdrawal', function (t) {
-  var expectedWithdrawal = {
+  const expectedWithdrawal = {
     status: 'COMPLETED',
     id: '1212'
   }
@@ -913,7 +894,7 @@ tap.test('getWithdrawal should return the withdrawal', function (t) {
     res.end(JSON.stringify(expectedWithdrawal))
   })
 
-  bitx.getWithdrawal('1212', function (err, withdrawal) {
+  luno.getWithdrawal('1212', function (err, withdrawal) {
     t.error(err)
     t.same(withdrawal, expectedWithdrawal)
     t.end()
@@ -921,7 +902,7 @@ tap.test('getWithdrawal should return the withdrawal', function (t) {
 })
 
 tap.test('requestWithdrawal should post the correct fields and return a new withdrawal', function (t) {
-  var expectedWithdrawal = {
+  const expectedWithdrawal = {
     status: 'PENDING',
     id: '1212'
   }
@@ -929,7 +910,7 @@ tap.test('requestWithdrawal should post the correct fields and return a new with
   server.on('request', function (req, res) {
     t.equal(req.method, 'POST')
     t.equal(req.url, '/api/1/withdrawals/')
-    var body = ''
+    let body = ''
     req.on('data', function (data) {
       body += data
     })
@@ -941,7 +922,7 @@ tap.test('requestWithdrawal should post the correct fields and return a new with
     })
   })
 
-  bitx.requestWithdrawal('ZAR_EFT', 1000, function (err, withdrawal) {
+  luno.requestWithdrawal('ZAR_EFT', 1000, function (err, withdrawal) {
     t.error(err)
     t.same(withdrawal, expectedWithdrawal)
     t.end()
@@ -949,7 +930,7 @@ tap.test('requestWithdrawal should post the correct fields and return a new with
 })
 
 tap.test('cancelWithdrawal should delete the specified withdrawal', function (t) {
-  var expectedWithdrawal = {
+  const expectedWithdrawal = {
     status: 'CANCELLED',
     id: '1212'
   }
@@ -960,7 +941,7 @@ tap.test('cancelWithdrawal should delete the specified withdrawal', function (t)
     res.end(JSON.stringify(expectedWithdrawal))
   })
 
-  bitx.cancelWithdrawal('1212', function (err, withdrawal) {
+  luno.cancelWithdrawal('1212', function (err, withdrawal) {
     t.error(err)
     t.same(withdrawal, expectedWithdrawal)
     t.end()
@@ -968,46 +949,46 @@ tap.test('cancelWithdrawal should delete the specified withdrawal', function (t)
 })
 
 tap.test('apiCallRate should return expected number of API calls', function (t) {
-  var apiCalls = 32
-  var expectedRate = bitx.apiCallRate + apiCalls
-  for (var i = 0; i < apiCalls; i += 1) {
-    bitx.getTicker(function (err, ticker) {
+  const apiCalls = 32
+  const expectedRate = luno.apiCallRate + apiCalls
+  for (let i = 0; i < apiCalls; i += 1) {
+    luno.getTicker(function (err, ticker) {
     })
   }
-  t.equal(bitx.apiCallRate, expectedRate)
+  t.equal(luno.apiCallRate, expectedRate)
   t.end()
 })
 
 tap.test('apiCallRate should refresh after one minute ', function (t) {
-  t.equal(bitx.apiCallRate > 0, true)
+  t.equal(luno.apiCallRate > 0, true)
   setTimeout(function () {
-    t.equal(bitx._requestMts.length, 0)
+    t.equal(luno._requestMts.length, 0)
     t.end()
   }, 60000)
 })
 
 tap.test('apiCallRate should refresh when called ', function (t) {
-  var expectedRate = 32
+  const expectedRate = 32
 
-  for (var i = 0; i < expectedRate; i += 1) {
-    bitx.getTicker(function (err, ticker) {
+  for (let i = 0; i < expectedRate; i += 1) {
+    luno.getTicker(function (err, ticker) {
     })
   }
 
   setTimeout(function () {
-    for (var i = 0; i < expectedRate; i += 1) {
-      bitx.getTicker(function (err, ticker) {
+    for (let i = 0; i < expectedRate; i += 1) {
+      luno.getTicker(function (err, ticker) {
       })
     }
-    t.equal(bitx.apiCallRate, 2 * expectedRate)
+    t.equal(luno.apiCallRate, 2 * expectedRate)
   }, 300)
 
   setTimeout(function () {
-    t.equal(bitx.apiCallRate, expectedRate)
+    t.equal(luno.apiCallRate, expectedRate)
   }, 60000)
 
   setTimeout(function () {
-    t.equal(bitx.apiCallRate, 0)
+    t.equal(luno.apiCallRate, 0)
     t.end()
   }, 61000)
 })
