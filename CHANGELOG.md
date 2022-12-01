@@ -1,3 +1,7 @@
+### 2.1.0 (2022-12-01)
+
+* add account methods, 
+
 ### 2.0.1 (2022-07-14)
 
 * Add debug option to output API call requests and responses 
