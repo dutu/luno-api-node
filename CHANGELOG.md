@@ -1,6 +1,9 @@
-### 2.1.0 (2022-12-01)
+### 2.1.0 (2022-12-02)
 
-* add account methods, 
+* add sub-account methods: `createAccount`, `updateAccountName`, `listAccountPendingTransactions`, `listAccountTransactions`, `listAccountBalances`, `getMove`, `move`, `listMoves`
+* fix method `getBalance()` to take optional parameter `asset` as string or array
+* remove method `getTransaction()`, which was deprecated
+* update tests
 
 ### 2.0.1 (2022-07-14)
 

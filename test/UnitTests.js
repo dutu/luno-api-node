@@ -204,13 +204,6 @@ tap.test('External', {autoend: true}, function (t) {
     tt.end()
   })
 
-  t.test('getLimits should call _request with the correct parameters', function (tt) {
-    mock.expects('_request').once().withArgs('GET', '/api/1/BTCZAR/getlimits', null, callback)
-    luno.getLimits(callback)
-    mock.verify()
-    tt.end()
-  })
-
   t.test('postBuyOrder should call _request with the correct parameters', function (tt) {
     const parameters = {
       type: 'BID',
@@ -277,14 +270,14 @@ tap.test('External', {autoend: true}, function (t) {
   })
 
   t.test('getBalance should accept an asset argument and call _request with the correct parameters', function (tt) {
-    mock.expects('_request').once().withArgs('GET', '/api/1/balance', {asset: 'ZAR'}, callback)
+    mock.expects('_request').once().withArgs('GET', '/api/1/balance', { assets: ['ZAR'] }, callback)
     luno.getBalance('ZAR', callback)
     mock.verify()
     tt.end()
   })
 
   t.test('should call _request with the correct parameters', function (tt) {
-    mock.expects('_request').once().withArgs('GET', '/api/1/funding_address', {asset: 'XBT'}, callback)
+    mock.expects('_request').once().withArgs('GET', '/api/1/funding_address', { asset: 'XBT' }, callback)
     luno.getFundingAddress('XBT', callback)
     mock.verify()
     tt.end()

@@ -690,7 +690,7 @@ tap.test('getBalance should return the balance for the specified asset', functio
 
   server.on('request', function (req, res) {
     t.equal(req.method, 'GET')
-    t.equal(req.url, '/api/1/balance?asset=ZAR')
+    t.equal(req.url, '/api/1/balance?assets=ZAR')
     res.end(JSON.stringify(expectedBalances))
   })
 
@@ -771,86 +771,6 @@ tap.test('createFundingAddress should return a new funding address', function (t
   luno.createFundingAddress('XBT', function (err, fundingAddress) {
     t.error(err)
     t.same(fundingAddress, expectedFundingAddress)
-    t.end()
-  })
-})
-
-tap.test('getTransactions should return the transactions', function (t) {
-  const expectedTransactions = {
-    total_count: 77,
-    transactions: [
-      {
-        description: 'test send to email address',
-        timestamp: 1397548704000,
-        txid: '',
-        amount: '-0.01',
-        address: 'test349873498@example.com',
-        type: 'SEND',
-        pending: false
-      },
-      {
-        description: 'R 5.44498',
-        timestamp: 1398596345020,
-        txid: '',
-        amount: '0.00099',
-        address: '',
-        type: 'BUY',
-        pending: false
-      }
-    ]
-  }
-
-  server.on('request', function (req, res) {
-    t.equal(req.method, 'GET')
-    t.equal(req.url, '/api/1/transactions?asset=XBT&offset=0&limit=10')
-    res.end(JSON.stringify(expectedTransactions))
-  })
-
-  luno.getTransactions('XBT', function (err, transactions) {
-    t.error(err)
-    t.same(transactions, expectedTransactions)
-    t.end()
-  })
-})
-
-tap.test('getTransactions should send options and return the transactions', function (t) {
-  const expectedTransactions = {
-    total_count: 77,
-    transactions: [
-      {
-        description: 'test send to email address',
-        timestamp: 1397548704000,
-        txid: '',
-        amount: '-0.01',
-        address: 'test349873498@example.com',
-        type: 'SEND',
-        pending: false
-      },
-      {
-        description: 'R 5.44498',
-        timestamp: 1398596345020,
-        txid: '',
-        amount: '0.00099',
-        address: '',
-        type: 'BUY',
-        pending: false
-      }
-    ]
-  }
-
-  server.on('request', function (req, res) {
-    t.equal(req.method, 'GET')
-    t.equal(req.url, '/api/1/transactions?asset=XBT&offset=5&limit=5')
-    res.end(JSON.stringify(expectedTransactions))
-  })
-
-  const options = {
-    offset: 5,
-    limit: 5
-  }
-  luno.getTransactions('XBT', options, function (err, transactions) {
-    t.error(err)
-    t.same(transactions, expectedTransactions)
     t.end()
   })
 })
