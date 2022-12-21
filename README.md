@@ -104,7 +104,7 @@ Example:
 luno.listAccountBalances(['XBT', 'ETH'], function (err, response) {})
 ```
 
-### getMove([options][, callback])
+### getMove(options[, callback])
 GET https://api.luno.com/api/exchange/1/move
 
 Example:
@@ -366,7 +366,17 @@ GET https://api.luno.com/api/exchange/2/orders/{orderId}
 Example:
 
 ```javascript
-luno.getOrder('BXHW6PFRRXKFSB4', function (err, result) {})
+luno.getOrderV2('BXHW6PFRRXKFSB4', function (err, result) {})
+```
+
+### getOrderV3(options[, callback])
+GET https://api.luno.com/api/exchange/3/orders/{orderId}
+
+Example:
+
+```javascript
+luno.getOrderV3({ id: 'BXMC2CJ7HNB88U4' }, function (err, result) {})
+luno.getOrderV3({ client_order_id: 'lmt-53960812' }, function (err, result) {})
 ```
 
 ### getTransactions(asset[, options][, callback])
@@ -420,6 +430,15 @@ Example:
 
 ```javascript
 luno.cancelWithdrawal('1212', function (err, withdrawal) {})
+```
+
+### listTransfers(id[, options][, callback])
+GET https://api.luno.com/api/exchange/1/transfers
+
+Example:
+
+```javascript
+luno.listTransfers(1212, { limit: 986 }, function (err, data) {})
 ```
 
 ## Contributing

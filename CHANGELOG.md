@@ -1,6 +1,12 @@
+### 2.2.0 (2022-12-21)
+
+* add method `listTransfers()`
+* fix url path for `getMove()`, `move()`, `listMoves()` and `updateAccountName()`
+* update documentation
+
 ### 2.1.0 (2022-12-02)
 
-* add sub-account methods: `createAccount`, `updateAccountName`, `listAccountPendingTransactions`, `listAccountTransactions`, `listAccountBalances`, `getMove`, `move`, `listMoves`
+* add sub-account methods: `createAccount()`, `updateAccountName()`, `listAccountPendingTransactions()`, `listAccountTransactions()`, `listAccountBalances()`, `getMove()`, `move()`, `listMoves()`
 * fix method `getBalance()` to take optional parameter `asset` as string or array
 * remove method `getTransaction()`, which was deprecated
 * update tests
@@ -27,7 +33,7 @@
 
 ### 1.9.0 (2021-12-06)
 
-* Add methods getOrderListV2, getOrderV2, getOrderV3
+* Add methods `getOrderListV2()`, `getOrderV2()`, `getOrderV3()`
 
 ### 1.8.0 (2020-10-13)
 
@@ -44,8 +50,8 @@
 
 ### 1.6.0
 
-* Add options to postBuyOrder, postMarketBuyOrder, postSellOrder and postMarketSellOrder
-* Add getFeeInfo method
+* Add options to `postBuyOrder()`, `postMarketBuyOrder()`, `postSellOrder()` and `postMarketSellOrder()`
+* Add `getFeeInfo()` method
 
 ### 1.5.1
 
@@ -53,11 +59,11 @@
 
 ### 1.5.0
 
-* Add getOrder method
+* Add `getOrder()` method
 
 ### 1.4.2
 
-* Make asset parameter optional for getBalance
+* Make `asset` parameter optional for `getBalance()`
 
 ### 1.4.1
 
@@ -65,19 +71,19 @@
 
 ### 1.4.0
 
-* Add pair option to getTicker, getOrderBook and getTrades
-* Add getAllTickers method
+* Add `pair` option to `getTicker()`, `getOrderBook()` and `getTrades()`
+* Add `getAllTickers()` method
 
 ### 1.3.0
 
-* Add createFundingAddress method
-* Add getTransactions method
-* Accept address option for getFundingAddress
-* Accept state option for getOrderList
-* Add getWithdrawals method
-* Add getWithdrawal method
-* Add requestWithdrawal method
-* Add cancelWithdrawal method
+* Add `createFundingAddress()` method
+* Add `getTransactions()` method
+* Accept `address` option for `getFundingAddress()`
+* Accept `state` option for `getOrderList()`
+* Add `getWithdrawals()` method
+* Add `getWithdrawal()` method
+* Add `requestWithdrawal()` method
+* Add `cancelWithdrawal()` method
 
 ### 1.2.1
 
@@ -85,14 +91,14 @@
 
 ### 1.2.0
 
-* Add getFundingAddress method
+* Add `getFundingAddress()` method
 
 ### 1.1.0
 
 * Support multiple currency pairs
-* BitX.getLimits is now deprecated (use BitX.getBalance instead).
+* `BitX.getLimits()` is now deprecated (use `BitX.getBalance()` instead).
 * Updated to the latest BitX API.
-* Added BitX.getBalance method.
+* Added `BitX.getBalance()` method.
 
 ### 1.0.1
 
